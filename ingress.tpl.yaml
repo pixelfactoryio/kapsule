@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  labels:
+    app.kubernetes.io/instance: ${SVC_NAME}
+    app.kubernetes.io/name: ${SVC_NAME}
+  name: ${SVC_NAME}
+  namespace: ${NAMESPACE}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`${SVC_NAME}.${BASE_DOMAIN}`)
+      services:
+        - kind: Service
+          port: ${SVC_PORT}
+          name: ${SVC_NAME}
+  tls:
+    secretName: ${SVC_NAME}.${BASE_DOMAIN}

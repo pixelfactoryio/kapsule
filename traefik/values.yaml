@@ -1,0 +1,9 @@
+service:
+  enabled: true
+  type: LoadBalancer
+  labels:
+    k8s.scw.cloud/ingress: traefik2
+
+additionalArguments:
+  - "--providers.kubernetesingress.ingressclass=traefik"
+  - "--log.level=INFO"

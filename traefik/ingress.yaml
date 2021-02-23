@@ -1,0 +1,29 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: auth
+  namespace: ${NAMESPACE}
+spec:
+  basicAuth:
+    secret: traefik-basic-auth
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  labels:
+    app.kubernetes.io/instance: traefik
+    app.kubernetes.io/name: traefik
+  name: traefik-dashboard
+  namespace: ${NAMESPACE}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`traefik.${BASE_DOMAIN}`)
+      services:
+        - kind: TraefikService
+          name: api@internal
+  tls:
+    secretName: traefik.${BASE_DOMAIN}

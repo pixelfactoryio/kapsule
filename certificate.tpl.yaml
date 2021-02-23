@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: ${SVC_NAME}.${BASE_DOMAIN}
+  namespace: ${NAMESPACE}
+spec:
+  commonName: ${SVC_NAME}.${BASE_DOMAIN}
+  secretName: ${SVC_NAME}.${BASE_DOMAIN}
+  dnsNames:
+    - ${SVC_NAME}.${BASE_DOMAIN}
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

@@ -1,0 +1,26 @@
+ingress:
+  enabled: false
+
+persistence:
+    enabled: true
+  
+grafana.ini:
+  log:
+    level: error
+  server:
+    domain: grafana.pixelfactory.io
+    root_url: https://grafana.pixelfactory.io
+  analytics:
+    reporting_enabled: false
+  auth:
+    disable_login_form: true
+    
+  auth.generic_oauth:
+    name: Auth0
+    enabled: true
+    allow_sign_up: true
+    scopes: openid profile email
+    auth_url: https://pixelfactoryio.eu.auth0.com/authorize
+    token_url: https://pixelfactoryio.eu.auth0.com/oauth/token
+    api_url: https://pixelfactoryio.eu.auth0.com/userinfo
+    role_attribute_path: contains(email, 'amine@pixelfactory.io') && 'Admin' || 'Viewer'

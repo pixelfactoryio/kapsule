@@ -1,0 +1,54 @@
+defaultRules:
+  create: true
+  rules:
+    alertmanager: true
+    etcd: false
+    general: true
+    k8s: true
+    kubeApiserver: false
+    kubeApiserverAvailability: false
+    kubeApiserverError: true
+    kubeApiserverSlos: false
+    kubelet: true
+    kubePrometheusGeneral: true
+    kubePrometheusNodeAlerting: true
+    kubePrometheusNodeRecording: true
+    kubernetesAbsent: true
+    kubernetesApps: true
+    kubernetesResources: true
+    kubernetesStorage: true
+    kubernetesSystem: true
+    kubeScheduler: false
+    kubeStateMetrics: true
+    network: true
+    node: true
+    prometheus: true
+    prometheusOperator: true
+    time: true
+
+kubeControllerManager:
+  enabled: false
+
+prometheus:
+  prometheusSpec:
+    retention: 14d
+    enableAdminAPI: true
+
+grafana:
+  enabled: false
+
+alertmanager:
+  enabled: true
+  config:
+    global:
+      resolve_timeout: 5m
+      opsgenie_api_url: https://api.eu.opsgenie.com/
+    receivers:
+      - name: 'null'
+    route:
+      group_by: ['...']
+      group_interval: 5s
+      group_wait: 5s
+      repeat_interval: 10m
+      receiver: opsgenie
+
